@@ -5,7 +5,7 @@
   "weekly": false,
   "saveMatch": false,
   "scriptUrl": "",
-  "skip": ["teacher.html", "legacy.html"],
+  "skip": ["teacher.html", "legacy.html", "database.rules.json"],
   "text": {
     "pickerTitle": "เข้าเล่นด้วยบัญชี Google",
     "pickerLooking": "กำลังโหลดข้อมูลของคุณ...",

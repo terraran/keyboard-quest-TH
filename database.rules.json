@@ -1,0 +1,65 @@
+{
+  "rules": {
+    ".read": false,
+    ".write": false,
+    "users": {
+      "$uid": {
+        ".read": "auth != null && auth.uid === $uid",
+        ".write": "auth != null && auth.uid === $uid",
+        "activeRoom": {
+          ".validate": "newData.hasChildren(['code','type','at']) && newData.child('code').isString() && newData.child('code').val().matches(/^[ACDEFGHJKLMNPQRTUVWXY23456789]{5}$/) && (newData.child('type').val() === '1v1' || newData.child('type').val() === 'royale') && newData.child('at').isNumber()",
+          "code": { ".validate": "newData.isString()" },
+          "type": { ".validate": "newData.isString()" },
+          "at": { ".validate": "newData.isNumber()" },
+          "$other": { ".validate": false }
+        },
+        "$other": { ".validate": false }
+      }
+    },
+    "rooms": {
+      "$roomCode": {
+        ".read": "auth != null",
+        ".write": "auth != null && ((!data.exists() && $roomCode.matches(/^[ACDEFGHJKLMNPQRTUVWXY23456789]{5}$/) && newData.child('info/hostUid').val() === auth.uid) || (!newData.exists() && (data.child('info/hostUid').val() === auth.uid || data.child('info/status').val() === 'done' || (data.child('info/raceStartsAt').isNumber() && data.child('info/raceStartsAt').val() < now - 1800000) || (data.child('info/createdAt').isNumber() && data.child('info/createdAt').val() < now - 21600000))))",
+        "info": {
+          ".write": "auth != null && data.child('hostUid').val() === auth.uid",
+          ".validate": "newData.hasChildren(['hostUid','type','status','createdAt','targetText']) && newData.child('hostUid').isString() && (!data.exists() || newData.child('hostUid').val() === data.child('hostUid').val()) && (newData.child('type').val() === '1v1' || newData.child('type').val() === 'royale') && newData.child('status').isString() && (newData.child('status').val() === 'lobby' || newData.child('status').val() === 'countdown' || newData.child('status').val() === 'done' || newData.child('status').val() === 'closed') && newData.child('createdAt').isNumber() && newData.child('targetText').isString() && newData.child('targetText').val().length <= 25000",
+          "hostUid": { ".validate": "newData.isString()" },
+          "type": { ".validate": "newData.val() === '1v1' || newData.val() === 'royale'" },
+          "status": { ".validate": "newData.val() === 'lobby' || newData.val() === 'countdown' || newData.val() === 'done' || newData.val() === 'closed'" },
+          "createdAt": { ".validate": "newData.isNumber() && (data.exists() ? newData.val() === data.val() : newData.val() <= now + 3600000)" },
+          "targetText": { ".validate": "newData.isString() && newData.val().length <= 25000" },
+          "hostName": { ".validate": "newData.isString() && newData.val().length <= 80" },
+          "exerciseTitle": { ".validate": "newData.isString() && newData.val().length <= 120" },
+          "lessonId": { ".validate": "newData.isNumber() && newData.val() >= 0 && newData.val() <= 200" },
+          "maxLives": { ".validate": "newData.isNumber() && newData.val() >= 1 && newData.val() <= 20" },
+          "raceStartsAt": { ".validate": "newData.isNumber()" },
+          "endedAt": { ".validate": "newData.isNumber()" },
+          "$other": { ".validate": false }
+        },
+        "players": {
+          "$playerName": {
+            ".write": "auth != null && $playerName === auth.uid && ((!data.exists() && newData.child('uid').val() === auth.uid && root.child('rooms').child($roomCode).child('info').child('status').val() === 'lobby') || (data.child('uid').val() === auth.uid && (!newData.exists() || newData.child('uid').val() === auth.uid)))",
+            ".validate": "newData.hasChildren(['uid','name','pos','cpm','errors','lives','status']) && newData.child('uid').isString() && newData.child('name').isString() && newData.child('name').val().length <= 80 && newData.child('pos').isNumber() && newData.child('pos').val() >= 0 && newData.child('pos').val() <= 20000 && newData.child('cpm').isNumber() && newData.child('cpm').val() >= 0 && newData.child('cpm').val() <= 3000 && newData.child('errors').isNumber() && newData.child('errors').val() >= 0 && newData.child('errors').val() <= 10000 && newData.child('lives').isNumber() && newData.child('lives').val() >= 0 && newData.child('lives').val() <= 20 && (newData.child('status').val() === 'waiting' || newData.child('status').val() === 'racing' || newData.child('status').val() === 'done' || newData.child('status').val() === 'eliminated' || newData.child('status').val() === 'left' || newData.child('status').val() === 'disconnected') && (!data.exists() || newData.child('lives').val() <= data.child('lives').val()) && (!data.exists() || data.child('status').val() !== 'left' || newData.child('status').val() === 'left') && (!data.exists() || data.child('status').val() !== 'disconnected' || newData.child('status').val() === 'disconnected' || newData.child('status').val() === 'left' || (data.child('dcAt').isNumber() && data.child('dcAt').val() > now - 65000))",
+            "uid": { ".validate": "newData.isString()" },
+            "name": { ".validate": "newData.isString() && newData.val().length <= 80" },
+            "pos": { ".validate": "newData.isNumber() && newData.val() >= 0 && newData.val() <= 20000" },
+            "cpm": { ".validate": "newData.isNumber() && newData.val() >= 0 && newData.val() <= 3000" },
+            "errors": { ".validate": "newData.isNumber() && newData.val() >= 0 && newData.val() <= 10000" },
+            "lives": { ".validate": "newData.isNumber() && newData.val() >= 0 && newData.val() <= 20 && (!data.exists() || newData.val() <= data.val())" },
+            "status": { ".validate": "newData.val() === 'waiting' || newData.val() === 'racing' || newData.val() === 'done' || newData.val() === 'eliminated' || newData.val() === 'left' || newData.val() === 'disconnected'" },
+            "dcAt": { ".validate": "newData.isNumber()" },
+            "cls": { ".validate": "newData.isString() && newData.val().length <= 12" },
+            "wpm": { ".validate": "newData.isNumber() && newData.val() >= 0 && newData.val() <= 600" },
+            "score": { ".validate": "newData.isNumber() && newData.val() >= 0 && newData.val() <= 15000000" },
+            "finishedAt": { ".validate": "newData.isNumber()" },
+            "isSpectator": { ".validate": "newData.isBoolean()" },
+            "active": { ".validate": "newData.isBoolean()" },
+            "char": { ".validate": "newData.isString() && newData.val().length <= 200" },
+            "$other": { ".validate": false }
+          }
+        },
+        "$other": { ".validate": false }
+      }
+    }
+  }
+}
