@@ -1,1 +1,23 @@
-{}
+{
+  "id": "public",
+  "teacherLink": false,
+  "homework": false,
+  "weekly": false,
+  "saveMatch": false,
+  "scriptUrl": "",
+  "skip": ["teacher.html", "legacy.html"],
+  "text": {
+    "pickerTitle": "เข้าเล่นด้วยบัญชี Google",
+    "pickerLooking": "กำลังโหลดข้อมูลของคุณ...",
+    "pickerNotFound": "ลองเข้าสู่ระบบใหม่อีกครั้ง"
+  },
+  "firebase": {
+    "apiKey": "AIzaSyD3X12vMcB2QiXZ2WJOStfCG0atjmGIkcI",
+    "authDomain": "keyboard-quest-th.firebaseapp.com",
+    "databaseURL": "https://keyboard-quest-th-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "projectId": "keyboard-quest-th",
+    "storageBucket": "keyboard-quest-th.firebasestorage.app",
+    "messagingSenderId": "978185263778",
+    "appId": "1:978185263778:web:450af432d259e2cb2155fb"
+  }
+}
