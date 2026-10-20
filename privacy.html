@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="th"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>นโยบายความเป็นส่วนตัว · คีย์บอร์ดเควส</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai+Looped:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#3B2416;--bg:#F4ECD8;--paper:#FFFCF3;--green:#2E5E45}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:'Noto Sans Thai Looped',sans-serif;line-height:1.75;font-size:16px}
+header{background:var(--green);color:#FFF6D8;padding:12px 16px;display:flex;align-items:center;gap:12px}
+header img{height:40px}
+header a{color:#FFF6D8;margin-left:auto;font-weight:600}
+main{max-width:820px;margin:20px auto;padding:20px 24px;background:var(--paper);border:2px solid var(--ink);border-radius:10px}
+h1{font-size:1.5em;margin:0 0 4px}h2{font-size:1.15em;margin:1.6em 0 .4em;border-bottom:2px solid #E1D3B2;padding-bottom:2px}
+.meta{color:#6A4A30;font-size:.9em}
+table{border-collapse:collapse;width:100%;font-size:.95em}th,td{border:1px solid #E1D3B2;padding:6px 8px;text-align:left;vertical-align:top}th{background:#F1E4C4}
+.box{background:#DDF2E3;border:2px solid #3FA36B;border-radius:8px;padding:10px 14px}
+@media (max-width:600px){main{margin:0;border-radius:0;border-width:0}}
+</style></head>
+<body>
+<header><img src="assets/ui/logo.png" alt="คีย์บอร์ดเควส"><b>นโยบายความเป็นส่วนตัว</b><a href="./">← กลับไปเล่น</a></header>
+<main>
+<h1>นโยบายความเป็นส่วนตัว</h1>
+<div class="meta">คีย์บอร์ดเควส (Keyboard Quest) · เว็บฝึกพิมพ์ภาษาไทย · ปรับปรุงล่าสุด: 20 ตุลาคม 2569</div>
+
+<p>คีย์บอร์ดเควสเป็นเว็บฝึกพิมพ์ภาษาไทยแบบเกม ให้ใช้ฟรี พัฒนาโดย พิพัฒน์พงศ์ คุณารักษ์ เป็นโครงการส่วนตัวเพื่อการศึกษา
+หน้านี้อธิบายว่าเว็บเก็บข้อมูลอะไร เก็บไว้ที่ไหน และคุณขอลบได้อย่างไร ตามพระราชบัญญัติคุ้มครองข้อมูลส่วนบุคคล พ.ศ. 2562 (PDPA)</p>
+
+<div class="box"><b>สรุปสั้น ๆ:</b> นักเรียนที่เข้าด้วยรหัสจากครู <b>ไม่ต้องมีอีเมล และเว็บไม่เก็บชื่อนักเรียน</b> — เซิร์ฟเวอร์รู้แค่รหัส เลขที่ และผลการเล่น
+ชื่อนักเรียนอยู่เฉพาะในเครื่องของครูและใน Google Drive ของครูเอง · ไม่มีโฆษณา ไม่ขายหรือแบ่งปันข้อมูลให้ใคร</div>
+
+<h2>1. ข้อมูลที่เก็บ</h2>
+<table>
+<tr><th>ใคร</th><th>เก็บอะไร</th><th>เก็บที่ไหน</th></tr>
+<tr><td>นักเรียนที่เข้าด้วยรหัสห้องเรียน</td>
+<td>รหัส 8 ตัว, เลขที่, ห้องที่ครูสร้าง, ดาวและด่านที่ผ่าน, ผลฝึก 50 ครั้งล่าสุด (วันเวลา แบบฝึก ความเร็ว ความแม่น จำนวนที่พิมพ์ผิด คะแนน), หน้าตาตัวละคร, คำแนะนำที่ดูแล้ว
+<br><b>ไม่เก็บ:</b> ชื่อ นามสกุล อีเมล หรือข้อมูลติดต่อใด ๆ</td>
+<td>Google Firebase (Firestore)</td></tr>
+<tr><td>ผู้เล่นที่ล็อกอินด้วยบัญชี Google</td>
+<td>รหัสบัญชีที่ Firebase ออกให้ และผลการเล่นแบบเดียวกับด้านบน · ชื่อและอีเมลของบัญชี Google อยู่ในระบบล็อกอินของ Firebase เท่านั้น ไม่ได้บันทึกลงฐานข้อมูลของเกม</td>
+<td>Google Firebase (Authentication, Firestore)</td></tr>
+<tr><td>ครูที่สร้างห้องเรียน</td>
+<td>บัญชี Google ที่ใช้ล็อกอิน (ผ่าน Firebase), ชื่อห้องที่ครูตั้ง, จำนวนนักเรียน, การปลดล็อกด่าน</td>
+<td>Google Firebase</td></tr>
+<tr><td>รายชื่อนักเรียนที่ครูใส่</td>
+<td>ชื่อนักเรียนคู่กับเลขที่และรหัส</td>
+<td><b>ไม่อยู่บนเซิร์ฟเวอร์ของเกม</b> — อยู่ในเบราว์เซอร์ของเครื่องที่ครูใช้ และในไฟล์ใน Google Drive ของครูเอง (โฟลเดอร์ "คีย์บอร์ดเควส · รายชื่อนักเรียน") หรือในไฟล์ .csv ที่ครูดาวน์โหลด ผู้พัฒนาเปิดดูไม่ได้</td></tr>
+<tr><td>การแข่งออนไลน์ (1v1 / Battle Royale)</td>
+<td>ชื่อที่แสดงในห้องแข่ง (นักเรียนที่เข้าด้วยรหัสแสดงเป็น "เลขที่ N"), ความคืบหน้าระหว่างแข่ง</td>
+<td>Google Firebase (Realtime Database) · ห้องแข่งถูกลบเมื่อแข่งจบ หรืออย่างช้าภายใน 6 ชั่วโมง</td></tr>
+<tr><td>ทุกคน</td>
+<td>การตั้งค่าเสียง ความคืบหน้าของผู้ที่ทดลองเล่น (ไม่ล็อกอิน)</td>
+<td>ในเบราว์เซอร์ของเครื่องนั้นเท่านั้น</td></tr>
+</table>
+
+<h2>2. ใช้ข้อมูลเพื่ออะไร</h2>
+<p>ใช้เพื่อให้เกมทำงานเท่านั้น: บันทึกดาวและด่าน ให้เล่นต่อได้ทุกเครื่อง ให้ครูดูความคืบหน้าของห้องเรียน และให้แข่งกันได้
+ไม่ใช้ทำโฆษณา ไม่ขาย และไม่ส่งต่อให้บุคคลอื่น · หากในอนาคตจะมีโฆษณา จะแจ้งในหน้านี้ก่อน และจะตั้งค่าให้เหมาะกับผู้ใช้ที่เป็นเด็ก</p>
+
+<h2>3. ผู้ให้บริการที่เกี่ยวข้อง</h2>
+<p>เว็บเปิดผ่าน GitHub Pages ใช้ Google Firebase เก็บข้อมูลเกม ใช้ Google เพื่อล็อกอินและ Google Drive (เฉพาะไฟล์ที่เว็บสร้างเอง) และโหลดฟอนต์/ไลบรารีจาก Google Fonts และ cdnjs
+ผู้ให้บริการเหล่านี้อาจเห็นที่อยู่ IP ของเครื่องตามปกติของการใช้อินเทอร์เน็ต</p>
+
+<h2>4. เก็บไว้นานเท่าไร และการลบข้อมูล</h2>
+<ul>
+<li>ข้อมูลของนักเรียนในห้องเรียนอยู่จนกว่าครูจะลบห้อง (หน้าครู → เมนู ⋯ → ลบห้องนี้) ซึ่งลบรหัสและผลการเล่นของทั้งห้องทันที</li>
+<li>รายชื่อในเครื่องครูถูกลบเมื่อครูกด "ออกจากระบบ" ส่วนไฟล์ใน Google Drive ครูลบเองได้ทุกเมื่อ</li>
+<li>ผู้เล่นบัญชี Google ขอลบข้อมูลได้ทางอีเมลด้านล่าง (ปุ่มลบบัญชีในเกมจะมาเร็ว ๆ นี้)</li>
+</ul>
+
+<h2>5. สิทธิของคุณ</h2>
+<p>คุณมีสิทธิขอดู ขอแก้ไข ขอให้ลบ หรือคัดค้านการใช้ข้อมูลของคุณ ผู้ปกครองของนักเรียนติดต่อครูของห้องเรียน หรือติดต่อผู้พัฒนาได้โดยตรง</p>
+
+<h2>6. ติดต่อ</h2>
+<p>พิพัฒน์พงศ์ คุณารักษ์ · อีเมล: <a href="mailto:at.pppknr@gmail.com">at.pppknr@gmail.com</a></p>
+</main>
+</body></html>
