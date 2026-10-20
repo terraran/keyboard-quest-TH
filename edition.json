@@ -1,6 +1,7 @@
 {
   "id": "public",
-  "teacherLink": false,
+  "teacherLink": true,
+  "privacy": "privacy.html",
   "homework": false,
   "weekly": false,
   "saveMatch": false,
