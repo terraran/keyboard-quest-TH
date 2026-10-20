@@ -5,7 +5,9 @@
   "weekly": false,
   "saveMatch": false,
   "scriptUrl": "",
-  "skip": ["teacher.html", "legacy.html", "database.rules.json"],
+  "backend": "public",
+  "googleClientId": "978185263778-n9d8l6uqg92cb3humiq18b2hjbtivhsb.apps.googleusercontent.com",
+  "skip": ["teacher.html", "teacher2.html", "legacy.html", "database.rules.json"],
   "text": {
     "pickerTitle": "เข้าเล่นด้วยบัญชี Google",
     "pickerLooking": "กำลังโหลดข้อมูลของคุณ...",
